@@ -1,0 +1,15 @@
+Configure your test environment in the file: src/config.properties
+Define OS:
+win for Windows
+mac for macOS
+Define browser:
+chrome
+firefox
+
+To run all test please run this command in the terminal:
+mvn clean install
+
+Important note: After opening https://www.thefork.com/ capture appears.
+It is impossible to close it with Selenium so you have to do it manually.
+You can also run test in Debug mode and set breakpoint on line 20 in the LoginTest.
+
