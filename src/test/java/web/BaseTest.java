@@ -13,7 +13,8 @@ public class BaseTest {
 
     @Before
     public void setUp() {
-        driver = driverFactory.getDriver(FileReader.readProperties("browser"));
+        driver = driverFactory.getDriver(FileReader.readProperties("browser"),
+                                         FileReader.readProperties("os"));
         driver.get(FileReader.readProperties("web_app_url"));
     }
 

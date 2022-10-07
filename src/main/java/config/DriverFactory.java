@@ -7,16 +7,16 @@ import java.util.concurrent.TimeUnit;
 public class DriverFactory {
 
     private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
-    private String browser;
 
-    private WebDriver createDriver(String browser) {
+    private WebDriver createDriver(String browser, String OS) {
         BrowserList browserType = BrowserList.valueOf(browser.toUpperCase());
+        OSList osType = OSList.valueOf(OS.toUpperCase());
         switch (browserType) {
             case CHROME:
-                driver.set(new ChromeDriverManager().createDriver());
+                driver.set(new ChromeDriverManager().createDriver(osType));
                 break;
             case FIREFOX:
-                driver.set(new FirefoxDriverManager().createDriver());
+                driver.set(new FirefoxDriverManager().createDriver(osType));
                 break;
             default:
                 throw new RuntimeException("Incorrect Browser Name");
@@ -24,12 +24,12 @@ public class DriverFactory {
         return driver.get();
     }
 
-    public WebDriver getDriver(String browser) {
+    public WebDriver getDriver(String browser, String OS) {
         if (null == driver.get()) {
-            driver.set(this.createDriver(browser));
+            driver.set(this.createDriver(browser, OS) );
         }
         driver.get().manage().window().maximize();
-        driver.get().manage().timeouts().implicitlyWait(4L, TimeUnit.SECONDS);
+        driver.get().manage().timeouts().implicitlyWait(5L, TimeUnit.SECONDS);
 
         return driver.get();
     }
@@ -43,6 +43,10 @@ public class DriverFactory {
 
     public enum BrowserList {
         CHROME, FIREFOX
+    }
+
+    public enum OSList {
+        MAC, WIN
     }
 }
 
